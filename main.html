@@ -1,90 +1,238 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Volume Of a Sphere</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volume of a Sphere Calculator</title>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .container {
-      background-color: #fff;
+      min-height: 100vh;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      width: 300px;
+    }
+    
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 450px;
       text-align: center;
+      transition: transform 0.3s ease;
     }
+    
+    .container:hover {
+      transform: translateY(-5px);
+    }
+    
     h2 {
-      color: #333;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-size: 28px;
+      position: relative;
+      padding-bottom: 10px;
     }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      border-radius: 3px;
+    }
+    
+    .sphere-icon {
+      font-size: 60px;
+      color: #3498db;
+      margin-bottom: 20px;
+    }
+    
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       text-align: left;
     }
+    
     label {
       display: block;
-      margin-bottom: 5px;
-      color: #555;
+      margin-bottom: 8px;
+      color: #34495e;
+      font-weight: 600;
     }
-    input[type="text"] {
+    
+    input[type="number"] {
       width: 100%;
-      padding: 8px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      padding: 14px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
     }
+    
+    input[type="number"]:focus {
+      border-color: #3498db;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+    
+    input[readonly] {
+      background-color: #f8f9fa;
+      color: #2c3e50;
+      font-weight: 600;
+      cursor: not-allowed;
+    }
+    
     button {
       width: 100%;
-      padding: 10px;
-      background-color: #007BFF;
-      color: #fff;
+      padding: 14px;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .result {
-      margin-top: 20px;
       font-size: 18px;
-      font-weight: bold;
-      color: #333;
+      font-weight: 600;
+      transition: all 0.3s;
+      margin-top: 10px;
     }
-    #volume {
-      width: 100%;
-      padding: 8px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background-color: #e9ecef;
+    
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .result {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #e8f4fc;
+      border-radius: 8px;
       text-align: center;
-      font-weight: normal;
+    }
+    
+    .result h3 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+    
+    #volume {
+      font-size: 22px;
+      font-weight: bold;
+      color: #e74c3c;
+    }
+    
+    .formula {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #7f8c8d;
+    }
+    
+    .formula p {
+      margin-bottom: 5px;
+    }
+    
+    .formula-code {
+      font-family: 'Courier New', monospace;
+      background-color: #2c3e50;
+      color: white;
+      padding: 5px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    
+    .error {
+      color: #e74c3c;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>Volume of a Sphere</h2>
-    <form id="MyForm">
+    
+    <div class="sphere-icon">●</div>
+    
+    <form id="volumeForm">
       <div class="form-group">
         <label for="radius">Radius</label>
-        <input type="text" id="radius" name="radius" required>
+        <input type="number" id="radius" name="radius" placeholder="Enter a positive number" step="any" min="0" required>
+        <div class="error" id="radiusError">Please enter a valid non-negative number</div>
       </div>
-      <div class="form-group">
-        <label for="volume">Volume</label>
-        <input type="text" id="volume" name="volume" readonly>
-      </div>
-      <button type="button" onclick="volume_sphere()">Calculate</button>
+      
+      <button type="button" onclick="calculateVolume()">Calculate Volume</button>
     </form>
+    
+    <div class="result">
+      <h3>Volume Result</h3>
+      <div id="volume">-</div>
+    </div>
+    
+    <div class="formula">
+      <p>Formula: <span class="formula-code">V = (4/3) × π × r³</span></p>
+      <p>Where: V = Volume, π = Pi (approx. 3.1416), r = Radius</p>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    function calculateVolume() {
+      // Get input value and output element
+      const radiusInput = document.getElementById('radius').value;
+      const radius = parseFloat(radiusInput);
+      const volumeOutput = document.getElementById('volume');
+      const errorElement = document.getElementById('radiusError');
+      
+      // Reset error message
+      errorElement.style.display = 'none';
+      
+      // Validate the input
+      if (isNaN(radius) || radius < 0) {
+        // Show error for invalid input
+        volumeOutput.textContent = 'NaN';
+        volumeOutput.style.color = '#e74c3c';
+        errorElement.style.display = 'block';
+        return;
+      }
+      
+      // Calculate the volume
+      const volume = (4 / 3) * Math.PI * Math.pow(radius, 3);
+      
+      // Round to four decimal places
+      const roundedVolume = volume.toFixed(4);
+      
+      // Display the result
+      volumeOutput.textContent = roundedVolume;
+      volumeOutput.style.color = '#27ae60';
+    }
+    
+    // Add event listener for Enter key
+    document.getElementById('radius').addEventListener('keyup', function(event) {
+      if (event.key === 'Enter') {
+        calculateVolume();
+      }
+    });
+  </script>
 </body>
 </html>
