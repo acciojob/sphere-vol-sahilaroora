@@ -1,22 +1,21 @@
-// script.js
-
 function volume_sphere() {
-  const radiusInput = document.getElementById('radius').value;
-  const radius = parseFloat(radiusInput);
-  const volumeField = document.getElementById('volume');
+  const radiusInput = document.getElementById("radius").value.trim();
+  const volumeOutput = document.getElementById("volume");
 
-  // Validate the input: check for non-numeric or negative values.
+  const radius = parseFloat(radiusInput);
+
+  // Check for invalid input (negative or non-numeric)
   if (isNaN(radius) || radius < 0) {
-    volumeField.value = 'NaN';
-    return;
+    volumeOutput.value = "NaN";
+  } else {
+    // Calculate volume
+    const volume = (4 / 3) * Math.PI * Math.pow(radius, 3);
+    // Round to 4 decimal places
+    volumeOutput.value = volume.toFixed(4);
   }
 
-  // Calculate the volume of the sphere.
-  const volume = (4 / 3) * Math.PI * Math.pow(radius, 3);
-
-  // Round the volume to four decimal places.
-  const roundedVolume = volume.toFixed(4);
-
-  // Display the result in the volume field.
-  volumeField.value = roundedVolume;
+  return false; // Prevent form submission
 }
+
+// Attach event listener to the form
+document.getElementById("MyForm").onsubmit = volume_sphere;
