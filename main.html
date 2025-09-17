@@ -1,24 +1,49 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Volume of Sphere Calculator</title>
-</head>
-<body>
+  <head>
+    <title>Sphere Volume Calculator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
 
-  <h1>Calculate the volume of a sphere</h1>
+      form {
+        max-width: 300px;
+        margin: auto;
+      }
 
-  <form id="MyForm">
-    <label for="radius">Radius</label>
-    <input type="text" id="radius" name="radius" required />
-    <br><br>
-    <label for="volume">Volume</label>
-    <input type="text" id="volume" name="volume" readonly />
-    <br><br>
-    <input type="submit" value="Calculate" />
-  </form>
+      label,
+      input {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
 
-  <script src="script.js"></script>
+      input[type="submit"] {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Volume of a Sphere Calculator</h2>
 
-</body>
+    <form id="sphereForm">
+      <label for="radius">Radius:</label>
+      <input type="text" id="radius" name="radius" required />
+
+      <label for="volume">Volume:</label>
+      <input type="text" id="volume" name="volume" readonly />
+
+      <input
+        type="submit"
+        value="Calculate"
+        onclick="volume_sphere(); return false;"
+      />
+    </form>
+
+    <script src="script.js"></script>
+  </body>
 </html>
 
